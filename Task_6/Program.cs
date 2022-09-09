@@ -15,21 +15,28 @@
 // }
 
 // Вариант 2 при помощи тернарных операторов
-// int max = firstDigit > secondDigit ? firstDigit : secondDigit;
-// Console.WriteLine($"The maximum digit of the number {num} is {max}");
-
-//Вариант 3 при помощи функции 
 Console.Clear();
 int num = new Random().Next(10, 100);
-
-int MaxDigit(int number)
+int firstDigit = num / 10;
+int secondDigit = num % 10;
+if (firstDigit == secondDigit) Console.WriteLine($"{num} -> The digits are equal");
+else
 {
-    int firstDigit = number / 10;
-    int secondDigit = number % 10;
-    if (firstDigit == secondDigit) return 0; //Проверка на равные цифры числа
-    return firstDigit > secondDigit ? firstDigit : secondDigit;
+    int max = firstDigit > secondDigit ? firstDigit : secondDigit;
+    Console.WriteLine($"The maximum digit of the number {num} is {max}");
 }
+//Вариант 3 при помощи функции 
+// Console.Clear();
+// int num = new Random().Next(10, 100);
 
-int maxDigit = MaxDigit(num);
-string result = maxDigit > 0 ? maxDigit.ToString() : "The digits are equal"; //если функция возвращает 0, то ...
-Console.WriteLine($"The maximum digit of the number {num} -> {result}");
+// int MaxDigit(int number)
+// {
+//     int firstDigit = number / 10;
+//     int secondDigit = number % 10;
+//     if (firstDigit == secondDigit) return 0; //Проверка на равные цифры числа
+//     return firstDigit > secondDigit ? firstDigit : secondDigit;
+// }
+
+// int maxDigit = MaxDigit(num);
+// string result = maxDigit > 0 ? maxDigit.ToString() : "The digits are equal"; //если функция возвращает 0, то ...
+// Console.WriteLine($"The maximum digit of the number {num} -> {result}");
