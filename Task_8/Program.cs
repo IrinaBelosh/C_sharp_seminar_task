@@ -60,8 +60,6 @@ else
     Console.WriteLine($"{num1} is not multiple of {num2}. No remainder.");
 }
 
-
-
 //Вариант третий без метода
 // Console.Clear();
 // Console.Write("Enter the first number: ");
