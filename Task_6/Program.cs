@@ -25,7 +25,6 @@
 //     int max = firstDigit > secondDigit ? firstDigit : secondDigit;
 //     Console.WriteLine($"The maximum digit of the number {num} is {max}");
 // }
-
 //Вариант 3 при помощи функции 
 Console.Clear();
 int num = new Random().Next(10, 100);
