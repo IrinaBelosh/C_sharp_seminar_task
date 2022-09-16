@@ -2,6 +2,7 @@
 // заданному номеру четверти, показывает диапазон
 // возможных координат точек в этой четверти (x и y).
 
+// //вариант первый
 // Console.Clear();
 // Console.Write("Enter a number of quarter: ");
 // int a = Convert.ToInt32(Console.ReadLine());
