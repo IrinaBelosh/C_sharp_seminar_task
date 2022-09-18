@@ -10,7 +10,7 @@ int number = Convert.ToInt32(Console.ReadLine());
 
 int Sumnumbers(int num)
 {
-    int sum = default;
+    int sum = default; //default для int это ноль
     for (int i = 1; i <= num; i++)
     {
         sum = sum + i; // sum = sum+=i (можно записать так)
