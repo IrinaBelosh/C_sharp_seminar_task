@@ -4,6 +4,9 @@
 // 12345 -> 5
 // 525 -> 3
 
+//-----------------------------
+//с циклом while
+
 // Console.Clear();
 // Console.Write("Enter a number: ");
 // int number = Convert.ToInt32(Console.ReadLine());
@@ -27,6 +30,7 @@
 // Console.WriteLine($"{number} -> {digits}");
 
 //----------------------------------------------
+//с циклом for
 Console.Clear();
 Console.Write("Enter a number: ");
 int number = Convert.ToInt32(Console.ReadLine());
