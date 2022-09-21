@@ -21,7 +21,7 @@ void PrintArray(int[] ar2)
     Console.Write("[");
     for (int i = 0; i < ar2.Length; i++)
     {
-        if (i == ar2.Length - 1) Console.Write($"{ar2[i]}] -> ");
+        if (i == ar2.Length - 1) Console.Write($"{ar2[i]}]");
         else Console.Write($"{ar2[i]}, ");
     }
 }
@@ -42,10 +42,11 @@ bool FindNumber(int[] ar1, int num)
 
 
 Console.Clear();
-Console.Write("Enter a desired number: ");
-int number = Convert.ToInt32(Console.ReadLine());
 int[] array = CreateAndFillArrayRandInt(12, -9, 9);
 PrintArray(array);
+Console.WriteLine();
+Console.Write("Enter a desired number: ");
+int number = Convert.ToInt32(Console.ReadLine());
 bool res = FindNumber(array, number);
 if (res) Console.WriteLine("YES");
 else Console.WriteLine("NO");
