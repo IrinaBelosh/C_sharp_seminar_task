@@ -22,10 +22,22 @@ void ChangeEvenNumbersToSquare(int[,] matrix)
     {
         for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            if (i % 2 == 0 && j % 2 == 0) matrix[i, j] = matrix[i, j] * matrix[i, j];
+            if (i % 2 == 0 && j % 2 == 0) matrix[i, j] = matrix[i, j] * matrix[i, j]; //matrix[i,j]*= matrix[i,j]
         }
     }
 }
+
+// // второе решение
+// void ChangeEvenNumbersToSquare(int[,] matrix)
+// {
+//     for (int i = 0; i < matrix.GetLength(0); i+=2)
+//     {
+//         for (int j = 0; j < matrix.GetLength(1); j+=2)
+//         {
+//             matrix[i, j] *= matrix[i, j];
+//         }
+//     }
+// }
 
 void PrintMatrix(int[,] matrix)
 {

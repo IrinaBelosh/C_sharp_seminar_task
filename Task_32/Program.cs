@@ -22,7 +22,7 @@ int SumSameIndexes (int[,] matrix)
     {
         for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            if (i==j) summ = summ + matrix[i,j];
+            if (i==j) summ = summ + matrix[i,j]; //summ +=matrix[i,j]
         }
     }
     return summ;
@@ -42,7 +42,20 @@ void PrintMatrix(int[,] matrix)
     }
 }
 
-int[,] matrix = CreateMatrixRndInt(6,6,1,9);
+bool restart = true;
+while(restart)
+{
+Console.Clear();
+
+Random rnd = new Random(); //задаем случайное количество столбцов и строк
+    int rndRows = rnd.Next(1,9);
+    int rndColumns = rnd.Next(1,9);
+
+int[,] matrix = CreateMatrixRndInt(rndRows,rndColumns,1,9);
 PrintMatrix(matrix);
 int result = SumSameIndexes(matrix);
 Console.WriteLine($" -> {result}");
+
+Console.WriteLine("Once again? \nPress 'Enter' if YES. Press any key if NO.");
+restart = Console.ReadKey().Key==ConsoleKey.Enter;
+}
