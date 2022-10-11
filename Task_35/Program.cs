@@ -1,69 +1,99 @@
-﻿// Задача 53: Задайте двумерный массив. Напишите программу,
-// которая поменяет местами первую и последнюю строку
-// массива.
+﻿// Задача 57: Составить частотный словарь элементов
+// двумерного массива. Частотный словарь содержит
+// информацию о том, сколько раз встречается элемент
+// входных данных.
 
+int[,] CreateMatrix(int rows, int columns, int min, int max)
 
-int[,] CreateArray(int rows, int columns, int min, int max)
 {
-    int[,] array = new int[rows, columns];
     Random rnd = new Random();
-    for (int i = 0; i < array.GetLength(0); i++)
+    int[,] matrix = new int[rows, columns];
+    for (int i = 0; i < matrix.GetLength(0); i++)
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            array[i, j] = rnd.Next(min, max);
+            matrix[i, j] = rnd.Next(min, max);
         }
     }
+    return matrix;
+}
+
+void PrintMatrix(int[,] matr)
+{
+
+    for (int i = 0; i < matr.GetLength(0); i++)
+    {
+        Console.Write("[ ");
+        for (int j = 0; j < matr.GetLength(1); j++)
+        {
+            if (j == matr.GetLength(1) - 1) Console.WriteLine($"{matr[i, j],3} ]");
+            else Console.Write($"{matr[i, j],3}, ");
+        }
+    }
+}
+
+int[] MatrixToArray(int[,] matrix1)
+{
+    int size = matrix1.GetLength(0) * matrix1.GetLength(1);
+    int rows = matrix1.GetLength(0);
+    int columns = matrix1.GetLength(1);
+
+    int[] array = new int[size];
+    int count = default;
+
+for (int i = 0; i < rows; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        array[count] = matrix1[i,j];
+        count++;
+    }
+}
     return array;
 }
 
-void PrintArray(int[,] ar)
+void PrintArray(int[] ar)
 {
-    for (int i = 0; i < ar.GetLength(0); i++)
+    Console.Write("[ ");
+    for (int i = 0; i < ar.Length; i++)
     {
-        Console.Write("[");
-        for (int j = 0; j < ar.GetLength(1); j++)
+        if (i == ar.Length - 1) Console.WriteLine($"{ar[i]} ]");
+        else Console.Write($"{ar[i]}, ");
+    }
+}
+
+void CountElements(int[]array)
+{
+    int num = array[0];
+    int count = 1;
+    for (int i = 1; i < array.Length; i++)
+    {
+        if (array[i]==num) count++;
+        else 
         {
-            if (j == ar.GetLength(1) - 1) Console.WriteLine($"{ar[i, j],3} ]");
-            else Console.Write($"{ar[i, j],3}, ");
+            Console.WriteLine($"{num} is met {count} times");
+            num = array[i];
+            count = 1;
         }
+        if (i==array.Length-1) Console.WriteLine($"{num} is met {count} times");
     }
 }
 
-// void ChangeFirstAndLastRows(int[,] ar1)
-// {
-//     int k = ar1.GetLength(0) - 1;
-//     int temp = default;
-//     for (int i = 0; i < ar1.GetLength(0); i++)
-//     {
-//         for (int j = 0; j < ar1.GetLength(1); j++)
-//         {
-//             if (i == 0)
-//             {
-//                 temp = ar1[i, j];
-//                 ar1[i, j] = ar1[k, j];
-//                 ar1[k, j] = temp;
-//             }
-//         }
-//     }
-// }
+////Полный вывод всех изменений
+// int[,] myMatrix = CreateMatrix(4, 3, 1, 10);
+// PrintMatrix(myMatrix);
+// Console.WriteLine();
+// int[] myArray = MatrixToArray(myMatrix);
+// PrintArray(myArray);
+// Array.Sort(myArray);
+// Console.WriteLine();
+// PrintArray(myArray);
+// CountElements(myArray);
 
-//Решение попроще из семинара
-void ChangeFirstAndLastRows(int[,] ar1)
-{
-    int k = ar1.GetLength(0) - 1;
-    int temp = default;
-    for (int j = 0; j < ar1.GetLength(1); j++)
-    {
-        temp = ar1[0, j];
-        ar1[0, j] = ar1[k, j];
-        ar1[k, j] = temp;
-    }
-}
-
-int[,] myArray = CreateArray(5, 4, 1, 100);
-PrintArray(myArray);
+//Краткий вывод только результата
+int[,] myMatrix = CreateMatrix(2, 3, 1, 10);
+PrintMatrix(myMatrix);
 Console.WriteLine();
-ChangeFirstAndLastRows(myArray);
-PrintArray(myArray);
-
+int[] myArray = MatrixToArray(myMatrix);
+Array.Sort(myArray);
+CountElements(myArray);

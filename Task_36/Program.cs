@@ -1,96 +1,101 @@
-﻿// Задача 55: Задайте двумерный массив. Напишите программу,
-// которая заменяет строки на столбцы. В случае, если это
-// невозможно, программа должна вывести сообщение для
-// пользователя.
+﻿// Задача 59: Задайте двумерный массив из целых чисел.
+// Напишите программу, которая удалит строку и столбец, на
+// пересечении которых расположен наименьший элемент
+// массива.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// 5 2 6 7
+// Наименьший элемент - 1, на выходе получим
+// следующий массив:
+// 9 2 3
+// 4 2 4
+// 2 6 7
 
-int[,] CreateArray(int rows, int columns, int min, int max)
+int[,] CreateMatrix(int rows, int columns, int min, int max)
+
 {
-    int[,] array = new int[rows, columns];
     Random rnd = new Random();
-    for (int i = 0; i < array.GetLength(0); i++)
+    int[,] matrix = new int[rows, columns];
+    for (int i = 0; i < matrix.GetLength(0); i++)
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            array[i, j] = rnd.Next(1, 100);
+            matrix[i, j] = rnd.Next(min, max);
         }
     }
-    return array;
+    return matrix;
 }
 
-void PrintArray(int[,] array)
+void PrintMatrix(int[,] matr)
 {
 
-    for (int i = 0; i < array.GetLength(0); i++)
+    for (int i = 0; i < matr.GetLength(0); i++)
     {
         Console.Write("[");
-        for (int j = 0; j < array.GetLength(1); j++)
+        for (int j = 0; j < matr.GetLength(1); j++)
         {
-            if (j == array.GetLength(1) - 1) Console.WriteLine($"{array[i, j],3} ]");
-            else Console.Write($"{array[i, j],3},");
+            if (j == matr.GetLength(1) - 1) Console.WriteLine($"{matr[i, j],3} ]");
+            else Console.Write($"{matr[i, j],3}, ");
         }
     }
 }
 
-// void ChangeRowsToColumns(int[,] array)
-// {
-//     if (array.GetLength(0) != array.GetLength(1)) Console.WriteLine("The procedure is impossible");
-//     else
-//     {
-//         int temp = default;
-//         for (int i = 0; i < array.GetLength(0); i++)
-//         {
-//             for (int j = i; j < array.GetLength(1); j++)
-//             {
-//                 if (i != j)
-//                 {
-//                     temp = array[i, j];
-//                     array[i, j] = array[j, i];
-//                     array[j, i] = temp;
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// int[,] myArray = CreateArray(3, 3, 1, 100);
-// PrintArray(myArray);
-// Console.WriteLine();
-// ChangeRowsToColumns(myArray);
-// PrintArray(myArray);
-
-// 6  33 44 25                     i;j     i;j+1      i;j+2       i;j+3
-
-// 9  78  7 80                     i+1;j   i+1;j+1    i+1;j+2     i+1;j+3
-
-// 82 41 98 78  i==j диагональ     i+2;j   i+2;j+1     i+2;j+2    i+2;j+3
-
-// 4  4  43 82                     i+3;j   i+3;j+1     i+3;j+2    i+3;j+3
-
-//Решение из семинара с промежуточным массивом и проверкой bool
-int[,] ChangePlace(int[,] arr)
+int[] FindMinimumElement(int[,] mat)
 {
-    int[,] arrResult = new int[arr.GetLength(0), arr.GetLength(1)]; //промеж массив
-    for (int i = 0; i < arr.GetLength(0); i++)
+    int[] ar = new int[2];
+    int min = mat[0, 0];
+    int a = 0;
+    int b = 0;
+    for (int i = 0; i < mat.GetLength(0); i++)
     {
-        for (int j = 0; j < arr.GetLength(1); j++)
+        for (int j = 0; j < mat.GetLength(1); j++)
         {
-            arrResult[i, j] = arr[j, i]; //в него сразу записываем значения
+            if (mat[i, j] < min)
+            {
+                min = mat[i, j];
+                a = i;
+                b = j;
+            }
         }
     }
-    return arrResult;
+    Console.WriteLine($"The min element {min}. Row {a} and column {b} to cut");
+    ar[0] = a;
+    ar[1] = b;
+    return ar;
 }
 
-bool CheckSq(int[,]array) //проверка на квадратность
+int[,] CutMatrix(int rowToRemove, int columnToRemove, int[,] originalArray)
 {
-    return array.GetLength(0)==array.GetLength(1); //это условие при котором проверка пройдена
+    int[,] result = new int[originalArray.GetLength(0) - 1, originalArray.GetLength(1) - 1];
+
+    for (int i = 0, n = 0; i < originalArray.GetLength(0); i++)
+    {
+        if (i == rowToRemove)
+            continue;
+
+        for (int j = 0, u = 0; j < originalArray.GetLength(1); j++)
+        {
+            if (j == columnToRemove)
+                continue;
+
+            result[n, u] = originalArray[i, j];
+            u++;
+        }
+        n++;
+    }
+
+    return result;
 }
 
-int[,] myArray = CreateArray(3, 3, 1, 100);
-PrintArray(myArray);
+Console.Clear();
+int[,] myMatrix = CreateMatrix(4, 3, 1, 100);
+PrintMatrix(myMatrix);
 Console.WriteLine();
-
-if (CheckSq(myArray)) //проверка на квадратность
-{
-    int[,] ar = ChangePlace(myArray);
-    PrintArray(ar);
-}
+int[] myArray = FindMinimumElement(myMatrix);
+Console.WriteLine();
+int x = myArray[0];
+int y = myArray[1];
+int[,] cutMatrix = CutMatrix(x, y,myMatrix);
+PrintMatrix(cutMatrix);

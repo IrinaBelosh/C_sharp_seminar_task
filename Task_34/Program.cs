@@ -1,44 +1,96 @@
-﻿
+﻿// Задача 55: Задайте двумерный массив. Напишите программу,
+// которая заменяет строки на столбцы. В случае, если это
+// невозможно, программа должна вывести сообщение для
+// пользователя.
 
+int[,] CreateArray(int rows, int columns, int min, int max)
+{
+    int[,] array = new int[rows, columns];
+    Random rnd = new Random();
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = rnd.Next(1, 100);
+        }
+    }
+    return array;
+}
 
-// Задача 67: Напишите программу, которая будет принимать на вход число и
-// возвращать сумму его цифр.
-// 453 -> 12
-// 45 -> 9
+void PrintArray(int[,] array)
+{
 
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        Console.Write("[");
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (j == array.GetLength(1) - 1) Console.WriteLine($"{array[i, j],3} ]");
+            else Console.Write($"{array[i, j],3},");
+        }
+    }
+}
 
-
-
-// Console.Write("Введите число: ");
-// int num = Convert.ToInt32(Console.ReadLine());
-
-// int SumDigits(int number)
+// void ChangeRowsToColumns(int[,] array)
 // {
-//     int sumInMethod = number % 10;
-//     if (number != 0)
+//     if (array.GetLength(0) != array.GetLength(1)) Console.WriteLine("The procedure is impossible");
+//     else
 //     {
-//         sumInMethod += SumDigits(number / 10);
+//         int temp = default;
+//         for (int i = 0; i < array.GetLength(0); i++)
+//         {
+//             for (int j = i; j < array.GetLength(1); j++)
+//             {
+//                 if (i != j)
+//                 {
+//                     temp = array[i, j];
+//                     array[i, j] = array[j, i];
+//                     array[j, i] = temp;
+//                 }
+//             }
+//         }
 //     }
-//     return sumInMethod;
 // }
 
-// int result = SumDigits(num);
-// Console.WriteLine(result);
+// int[,] myArray = CreateArray(3, 3, 1, 100);
+// PrintArray(myArray);
+// Console.WriteLine();
+// ChangeRowsToColumns(myArray);
+// PrintArray(myArray);
 
-// Задача 69: Напишите программу, которая на вход принимает два числа A и B, и
-// возводит число А в целую степень B с помощью рекурсии.
-// A = 3; B = 5 -> 243 (3⁵)
-// A = 2; B = 3 -> 8
+// 6  33 44 25                     i;j     i;j+1      i;j+2       i;j+3
 
-Console.Write("Введите первое число: ");
-int num = Convert.ToInt32(Console.ReadLine());
-Console.Write("Введите второе число: ");
-int degree = Convert.ToInt32(Console.ReadLine());
-int result = Exponention(num, degree);
-Console.WriteLine(result);
+// 9  78  7 80                     i+1;j   i+1;j+1    i+1;j+2     i+1;j+3
 
-int Exponention(int numberA, int numberB)
+// 82 41 98 78  i==j диагональ     i+2;j   i+2;j+1     i+2;j+2    i+2;j+3
+
+// 4  4  43 82                     i+3;j   i+3;j+1     i+3;j+2    i+3;j+3
+
+//Решение из семинара с промежуточным массивом и проверкой bool
+int[,] ChangePlace(int[,] arr)
 {
-    if (numberB == 0) return 1;
-    return numberA *= Exponention(numberA, numberB - 1);
+    int[,] arrResult = new int[arr.GetLength(0), arr.GetLength(1)]; //промеж массив
+    for (int i = 0; i < arr.GetLength(0); i++)
+    {
+        for (int j = 0; j < arr.GetLength(1); j++)
+        {
+            arrResult[i, j] = arr[j, i]; //в него сразу записываем значения
+        }
+    }
+    return arrResult;
+}
+
+bool CheckSq(int[,]array) //проверка на квадратность
+{
+    return array.GetLength(0)==array.GetLength(1); //это условие при котором проверка пройдена
+}
+
+int[,] myArray = CreateArray(3, 3, 1, 100);
+PrintArray(myArray);
+Console.WriteLine();
+
+if (CheckSq(myArray)) //проверка на квадратность
+{
+    int[,] ar = ChangePlace(myArray);
+    PrintArray(ar);
 }

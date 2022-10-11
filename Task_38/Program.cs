@@ -1,107 +1,94 @@
-﻿// Задача 59: Задайте двумерный массив из целых чисел.
-// Напишите программу, которая удалит строку и столбец, на
-// пересечении которых расположен наименьший элемент
-// массива.
-// Например, задан массив:
-// 1 4 7 2
-// 5 9 2 3
-// 8 4 2 4
-// 5 2 6 7
-// Наименьший элемент - 1, на выходе получим
-// следующий массив:
-// 9 2 3
-// 4 2 4
-// 2 6 7
+﻿// Задача 65: Задайте значения M и N. Напишите программу, которая
+// выведет все натуральные числа в промежутке от M до N.
+// M = 1; N = 5 -> "1, 2, 3, 4, 5"
+// M = 4; N = 8 -> "4, 5, 6, 7, 8"
+//
+// Console.Write("Введите число M: ");
+// int numM = Convert.ToInt32(Console.ReadLine());
+// Console.Write("Введите число N: ");
+// int numN = Convert.ToInt32(Console.ReadLine());
+// int tempBig = default;
+// int tempSmall = default;
+// if (numM > numN)
+// {
+//     tempBig=numM;
+//     tempSmall = numN;
+// }
+// else 
+// {
+//     tempBig=numN;
+//     tempSmall=numM;
+// }
 
-int[,] CreateMatrix(int rows, int columns, int min, int max)
+// Console.Write($"M = {tempSmall}; N = {tempBig} -> ");
+// NaturalNumbers(tempSmall, tempBig);
+// Console.WriteLine();
+// Console.ResetColor();
 
+
+// void NaturalNumbers(int numberM, int numberN)
+// {
+//     if (numberN < numberM) return;
+//     NaturalNumbers(numberM, numberN - 1);    
+//     Console.Write($"{numberN} ");
+// }
+
+//Моё решение
+// bool restart = true;
+// while (restart)
+// {
+//     Console.WriteLine("Enter two numbers (M N) : ");
+//     string[] array = Console.ReadLine().Split();
+//     int m = int.Parse(array[0]);
+//     int n = int.Parse(array[1]);
+//     if (m == n) Console.WriteLine("Digits must not be equal.");
+//     if (m < n)
+//     {
+//         PrintDigits(m, n);
+//         Console.WriteLine();
+//     }
+//     if (m > n)
+//     {
+//         PrintDigits2(n, m);
+//         Console.WriteLine();
+//     }
+
+//     Console.WriteLine("To start again pres 'Enter', to quit press any key.");
+//     restart = Console.ReadKey().Key == ConsoleKey.Enter;
+// }
+
+// void PrintDigits(int min, int max)
+// {
+//     if (max < min) return;
+//     PrintDigits(min, max - 1);
+//     Console.Write($"{max} ");
+// }
+
+// void PrintDigits2(int min, int max)
+// {
+//     if (max < min) return;
+//     Console.Write($"{max} ");
+//     PrintDigits2(min, max - 1);
+// }
+
+//Второй вариант из семинара
+Console.Write("Введите число M: ");
+int numM = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите число N: ");
+int numN = Convert.ToInt32(Console.ReadLine());
+NaturalNumbers(numM, numN);
+
+void NaturalNumbers(int num1, int num2)
 {
-    Random rnd = new Random();
-    int[,] matrix = new int[rows, columns];
-    for (int i = 0; i < matrix.GetLength(0); i++)
+    if (num1 == num2) Console.WriteLine(num2);
+    if (num1 > num2) 
     {
-        for (int j = 0; j < matrix.GetLength(1); j++)
-        {
-            matrix[i, j] = rnd.Next(min, max);
-        }
+        Console.Write($"{num1} ");
+        NaturalNumbers(num1-1, num2);
     }
-    return matrix;
-}
-
-void PrintMatrix(int[,] matr)
-{
-
-    for (int i = 0; i < matr.GetLength(0); i++)
+    if (num1<num2)
     {
-        Console.Write("[");
-        for (int j = 0; j < matr.GetLength(1); j++)
-        {
-            if (j == matr.GetLength(1) - 1) Console.WriteLine($"{matr[i, j],3} ]");
-            else Console.Write($"{matr[i, j],3}, ");
-        }
+        Console.Write($"{num1} ");
+        NaturalNumbers(num1+1, num2);
     }
 }
-
-int[] FindMinimumElement(int[,] mat)
-{
-    int[] ar = new int[2];
-    int min = mat[0, 0];
-    int a = 0;
-    int b = 0;
-    for (int i = 0; i < mat.GetLength(0); i++)
-    {
-        for (int j = 0; j < mat.GetLength(1); j++)
-        {
-            if (mat[i, j] < min)
-            {
-                min = mat[i, j];
-                a = i;
-                b = j;
-            }
-        }
-    }
-    Console.WriteLine($"The min element {min}. Row {a} and column {b} to cut");
-    ar[0] = a;
-    ar[1] = b;
-    return ar;
-}
-
-int[,] CutMatrix(int rowToRemove, int columnToRemove, int[,] originalArray)
-{
-    int[,] result = new int[originalArray.GetLength(0) - 1, originalArray.GetLength(1) - 1];
-
-    for (int i = 0, n = 0; i < originalArray.GetLength(0); i++)
-    {
-        if (i == rowToRemove)
-            continue;
-
-        for (int j = 0, u = 0; j < originalArray.GetLength(1); j++)
-        {
-            if (j == columnToRemove)
-                continue;
-
-            result[n, u] = originalArray[i, j];
-            u++;
-        }
-        n++;
-    }
-
-    return result;
-}
-
-Console.Clear();
-int[,] myMatrix = CreateMatrix(4, 3, 1, 100);
-PrintMatrix(myMatrix);
-Console.WriteLine();
-int[] myArray = FindMinimumElement(myMatrix);
-Console.WriteLine();
-int x = myArray[0];
-int y = myArray[1];
-int[,] cutMatrix = CutMatrix(x, y,myMatrix);
-PrintMatrix(cutMatrix);
-
-
-
-
-
-
